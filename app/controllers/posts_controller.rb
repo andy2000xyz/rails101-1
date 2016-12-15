@@ -2,6 +2,7 @@ class PostsController < ApplicationController
 
   before_filter :authenticate_user!, :only => [:new, :create]
 
+
   def new
     @group = Group.find(params[:group_id])
     @post = Post.new
@@ -18,6 +19,16 @@ class PostsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def edit
+    @group = Group.find(params[:group_id])
+  end
+
+  def destroy
+    @group = Group.find(params[:group_id])
+    @group.post.destroy
+    redirect_to groups_path(@group), alert: "Post deleted"
   end
 
   private
